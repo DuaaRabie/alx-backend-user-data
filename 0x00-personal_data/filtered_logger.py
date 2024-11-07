@@ -37,4 +37,3 @@ class RedactingFormatter(logging.Formatter):
         return self.filter_datum(
             self.fields, self.REDACTION,
             message, self.SEPARATOR)
-
