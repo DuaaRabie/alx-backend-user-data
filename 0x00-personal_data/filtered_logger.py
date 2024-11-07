@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" 0. Regex-ing """
+""" 0. Regex-ing to return the log message obfuscated """
 
 
 import re
