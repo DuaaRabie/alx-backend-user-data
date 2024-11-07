@@ -8,25 +8,33 @@ from typing import List
 
 
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class"""
+    """ Redacting Formatter class """
     REDACTION = "***"
-    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+    FORMAT =\
+        "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
+        """ Initializes the RedactingFormatter class
+        with a list of fields to redact """
         self.fields = fields
         super(RedactingFormatter, self).__init__(self.FORMAT)
 
     def filter_datum(
-        fields: List[str], redaction: str, message: str,
-        separator: str
+        self, fields: List[str],
+        redaction: str, message: str, separator: str
     ) -> str:
-        """ returns the log message obfuscated """
+        """ Returns the log message obfuscated
+        by replacing field values with REDACTION """
         for field in fields:
-            message = re.sub(rf'{field}=[^;]*', f'{field}={redaction}', message)
+            pattern = rf'{field}=[^;]*'
+            message = re.sub(pattern, f'{field}={redaction}', message)
         return message.replace(';', separator)
 
     def format(self, record: logging.LogRecord) -> str:
+        """ Formats the log record and applies redaction """
         message = record.getMessage()
-        return self.filter_datum(self.fields, self.REDACTION, message, self.SEPARATOR)
-        
+        return self.filter_datum(
+            self.fields, self.REDACTION,
+            message, self.SEPARATOR
+        )
