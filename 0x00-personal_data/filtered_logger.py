@@ -43,7 +43,8 @@ class RedactingFormatter(logging.Formatter):
             self.fields, self.REDACTION,
             message, self.SEPARATOR)
 
-def get_logger():
+
+def get_logger() -> logging.Logger:
     """ function that takes no arguments and returns a logging.Logger"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
