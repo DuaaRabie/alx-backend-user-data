@@ -7,6 +7,18 @@ import logging
 from typing import List
 
 
+def filter_datum(
+        fields: List[str],
+        redaction: str, message: str, separator: str
+    ) -> str:
+        """ Returns the log message obfuscated
+        by replacing field values with REDACTION """
+        for field in fields:
+            pattern = rf'{field}=[^;]*'
+            message = re.sub(pattern, f'{field}={redaction}', message)
+        return message.replace(';', separator)
+
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class """
     REDACTION = "***"
@@ -20,20 +32,9 @@ class RedactingFormatter(logging.Formatter):
         self.fields = fields
         super(RedactingFormatter, self).__init__(self.FORMAT)
 
-    def filter_datum(
-        self, fields: List[str],
-        redaction: str, message: str, separator: str
-    ) -> str:
-        """ Returns the log message obfuscated
-        by replacing field values with REDACTION """
-        for field in fields:
-            pattern = rf'{field}=[^;]*'
-            message = re.sub(pattern, f'{field}={redaction}', message)
-        return message.replace(';', separator)
-
     def format(self, record: logging.LogRecord) -> str:
         """ Formats the log record and applies redaction """
         message = super().format(record)
-        return self.filter_datum(
+        return filter_datum(
             self.fields, self.REDACTION,
             message, self.SEPARATOR)
