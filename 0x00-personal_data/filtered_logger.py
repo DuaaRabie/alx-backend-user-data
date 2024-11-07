@@ -48,8 +48,9 @@ def get_logger() -> logging.Logger:
     """ function that takes no arguments and returns a logging.Logger"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
-    logger.setLevel(logging.INFO)
-    logger.setLevel(logging.INFO)
+    logger.propagate = False
+    handler = logging.StreamHandler()
+    formatter = RedactingFormatter(PII_FIELDS)
     formatter = RedactingFormatter(
         '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         PII_FIELDS)
