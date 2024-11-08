@@ -60,7 +60,7 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db():
+def get_db() -> None:
     """
     Returns a MySQL database connection object
     using credentials stored as environment variables.
