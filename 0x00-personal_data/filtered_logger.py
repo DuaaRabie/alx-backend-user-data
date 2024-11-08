@@ -89,13 +89,6 @@ def get_db() -> None:
             password=db_password,
             database=db_name
         )
-
-        # Check if the connection was successful
-        if connection.is_connected():
-            return connection
-        else:
-            raise ValueError("Failed to connect to the database.")
-
+        return connection
     except Error as e:
-        print(f"Error: {e}")
-        raise
+        return None
