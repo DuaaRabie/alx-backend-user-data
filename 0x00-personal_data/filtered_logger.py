@@ -10,7 +10,7 @@ from mysql.connector import Error
 from typing import List
 
 
-PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'ip')
+PII_FIELDS = ('name', 'email', 'password', 'ssn', 'ip')
 
 
 def filter_datum(
