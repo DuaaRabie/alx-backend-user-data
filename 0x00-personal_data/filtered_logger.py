@@ -77,9 +77,8 @@ def get_db():
     db_name = os.environ.get('PERSONAL_DATA_DB_NAME', 'holberton')
 
     # If the database name is not set, raise an error
-    name_error = "(PERSONAL_DATA_DB_NAME) is required but not set."
     if not db_name:
-        raise ValueError(name_error)
+        raise ValueError("(PERSONAL_DATA_DB_NAME) is required but not set.")
 
     try:
         # Connect to the database using the retrieved credentials
@@ -89,5 +88,7 @@ def get_db():
             password=db_password,
             database=db_name
         )
+        return connection
     except Error as e:
         print(f"Error connecting to MySQL Database - {e}")
+        return None
