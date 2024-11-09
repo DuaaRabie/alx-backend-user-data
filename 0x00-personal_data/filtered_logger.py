@@ -21,7 +21,7 @@ def filter_datum(
     by replacing field values with REDACTION """
     for field in fields:
         pattern = rf'{re.escape.field}=[^;]*'
-        message = re.sub(pattern, rf'{re.escape.field}={redaction}', message)
+        message = re.sub(pattern, rf'{field}={redaction}', message)
     return message.replace(';', separator)
 
 
