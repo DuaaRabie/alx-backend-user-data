@@ -80,12 +80,11 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     if not db_name:
         raise ValueError("(PERSONAL_DATA_DB_NAME) is required but not set.")
 
-    try:
-        # Connect to the database using the retrieved credentials
-        connection = mysql.connector.connect(
-            host=db_host,
-            user=db_user,
-            password=db_password,
-            database=db_name
-        )
-        return connection
+    # Connect to the database using the retrieved credentials
+    connection = mysql.connector.connect(
+        host=db_host,
+        user=db_user,
+        password=db_password,
+        database=db_name
+    )
+    return connection
