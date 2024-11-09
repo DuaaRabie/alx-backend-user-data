@@ -75,11 +75,6 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     db_password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
     db_host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
     db_name = os.getenv('PERSONAL_DATA_DB_NAME', 'holberton')
-
-    # If the database name is not set, raise an error
-    if not db_name:
-        raise ValueError("(PERSONAL_DATA_DB_NAME) is required but not set.")
-
     # Connect to the database using the retrieved credentials
     connection = mysql.connector.connect(
         host=db_host,
