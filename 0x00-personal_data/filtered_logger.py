@@ -88,11 +88,6 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         password=db_password,
         database=db_name
     )
-    if connection.is_connected():
-        cursor = connection.cursor()
-        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {db_name}")
-        connection.database = db_name
-        cursor.close()
     return connection
 
     except Error as e:
