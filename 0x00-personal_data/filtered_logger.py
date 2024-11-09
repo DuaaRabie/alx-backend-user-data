@@ -71,15 +71,30 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     - PERSONAL_DATA_DB_NAME
     """
 
-    db_user = os.environ.get('PERSONAL_DATA_DB_USERNAME', 'root')
-    db_password = os.environ.get('PERSONAL_DATA_DB_PASSWORD', '')
-    db_host = os.environ.get('PERSONAL_DATA_DB_HOST', 'localhost')
-    db_name = os.environ.get('PERSONAL_DATA_DB_NAME')
+    db_user: str = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    db_password: str = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    db_host: str = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    db_name: str = os.getenv('PERSONAL_DATA_DB_NAME', 'holberton')
+
+    # If the database name is not set, raise an error
+    if not db_name:
+        raise ValueError("PERSONAL_DATA_DB_NAME is required but not set.")
+
+    try:
     # Connect to the database using the retrieved credentials
-    connection = MySqlConnection(
+    connection: MySQLConnection = mysql.connector.connect(
         host=db_host,
         user=db_user,
         password=db_password,
         database=db_name
     )
-    return connection
+    if connection.is_connected():
+        cursor = connection.cursor()
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {db_name}")
+        connection.database = db_name
+        cursor.close()
+        return connection
+
+    except Error as e:
+        print(f"Error connecting to MySQL Database - {e}")
+        return None
