@@ -82,7 +82,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
     try:
     # Connect to the database using the retrieved credentials
-    connection: MySQLConnection = mysql.connector.connect(
+    connection: MySQLConnection = mysql.connector.connection(
         host=db_host,
         user=db_user,
         password=db_password,
