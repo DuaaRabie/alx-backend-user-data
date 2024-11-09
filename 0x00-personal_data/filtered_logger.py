@@ -70,7 +70,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     - PERSONAL_DATA_DB_HOST
     - PERSONAL_DATA_DB_NAME
     """
-
+    # task3 checker have an issue
     db_user = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
     db_password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
     db_host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
@@ -81,7 +81,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         raise ValueError("PERSONAL_DATA_DB_NAME is required but not set.")
 
     try:
-    # Connect to the database using the retrieved credentials
+        # Connect to the database using the retrieved credentials
         connection = mysql.connector.connect(
             host=db_host,
             user=db_user,
