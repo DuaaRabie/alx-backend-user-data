@@ -89,5 +89,3 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
             database=db_name
         )
         return connection
-    except Error as e:
-        return None
