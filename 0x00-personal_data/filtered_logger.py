@@ -90,5 +90,4 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         )
         return connection
     except Error as e:
-        print(f"Error connecting to MySQL Database - {e}")
         return None
