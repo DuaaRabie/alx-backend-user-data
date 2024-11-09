@@ -82,13 +82,13 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
     try:
     # Connect to the database using the retrieved credentials
-    connection = mysql.connector.connection(
-        host=db_host,
-        user=db_user,
-        password=db_password,
-        database=db_name
-    )
-    return connection
+        connection = mysql.connector.connect(
+            host=db_host,
+            user=db_user,
+            password=db_password,
+            database=db_name
+        )
+        return connection
 
     except Error as e:
         print(f"Error connecting to MySQL Database - {e}")
