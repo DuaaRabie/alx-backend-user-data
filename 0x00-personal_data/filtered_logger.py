@@ -71,10 +71,10 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     - PERSONAL_DATA_DB_NAME
     """
 
-    db_user: str = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
-    db_password: str = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
-    db_host: str = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
-    db_name: str = os.getenv('PERSONAL_DATA_DB_NAME', 'holberton')
+    db_user = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    db_password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    db_host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME', 'holberton')
 
     # If the database name is not set, raise an error
     if not db_name:
