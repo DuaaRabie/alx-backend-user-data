@@ -20,7 +20,7 @@ def filter_datum(
     """ Returns the log message obfuscated
     by replacing field values with REDACTION """
     for field in fields:
-        pattern = rf'{re.escape.field}=[^{re.escape(eeparator)}]*'
+        pattern = rf'{re.escape.field}=[^{re.escape(separator)}]*'
         message = re.sub(pattern, rf'{field}={redaction}', message)
     return message
 
