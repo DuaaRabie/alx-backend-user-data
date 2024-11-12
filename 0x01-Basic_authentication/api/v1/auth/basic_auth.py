@@ -10,8 +10,9 @@ class BasicAuth(Auth):
     """
     BasicAuth class that inherits from Auth.
     """
-    def extract_base64_authorization_header(self, authorization_header: str)\
-    -> str:
+    def extract_base64_authorization_header(
+        self, authorization_header: str
+    ) -> str:
         """ returns the Base64 part of the Authorization header """
         if not isinstance(authorization_header, str):
             return None
@@ -24,8 +25,9 @@ class BasicAuth(Auth):
 
         return parts[1]
 
-    def decode_base64_authorization_header(self, base64_authorization_header: str)\
-    -> str:
+    def decode_base64_authorization_header(
+        self, base64_authorization_header: str
+    ) -> str:
         """ returns the decoded value of a Base64 string """
         if base64_authorization_header is None:
             return None
