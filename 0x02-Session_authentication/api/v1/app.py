@@ -30,13 +30,16 @@ else:
 def before_request():
     """ called before every request to validate authentication """
     excluded_paths = [
-        '/api/v1/status/',
-        '/api/v1/unauthorized/', '/api/v1/forbidden/']
+        '/api/v1/status/', '/api/v1/unauthorized/',
+        '/api/v1/forbidden/', '/api/v1/auth_session/login/']
     request.current_user = auth.current_user(request)
     if auth is not None and request.path not in excluded_paths:
         if auth.require_auth(request.path, excluded_paths):
             if auth.authorization_header(request) is None:
                 abort(401, description="Unauthorized")
+            else:
+                if auth.session_cookie(request) is None:
+                    abort(401, description="Unauthorized")
             if auth.current_user(request) is None:
                 abort(403, description="Forbidden")
 
