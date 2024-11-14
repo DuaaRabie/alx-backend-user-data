@@ -52,7 +52,7 @@ class SessionDBAuth(SessionExpAuth):
             return False
         user_sessions = UserSession.search({"session_id": session_id})
         if not user_sessions:
-            return None
+            return False
         user_session = user_sessions[0]
         user_session.remove()
         return True
