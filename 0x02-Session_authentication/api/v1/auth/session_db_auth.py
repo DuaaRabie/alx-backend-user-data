@@ -39,7 +39,7 @@ class SessionDBAuth(SessionExpAuth):
         if created_at is None:
             return None
         if created_at + timedelta(seconds=self.session_duration) <\
-                datetime.nou():
+                datetime.now():
             return None
         return user_session.user_id
 
