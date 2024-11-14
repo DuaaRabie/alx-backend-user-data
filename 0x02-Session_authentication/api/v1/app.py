@@ -37,9 +37,9 @@ def before_request():
         if auth.require_auth(request.path, excluded_paths):
             if auth.authorization_header(request) is None:
                 abort(401, description="Unauthorized")
-            else:
-                if auth.session_cookie(request) is None:
-                    abort(403, description="Forbidden")
+            if auth.authorization_header(request) and\
+                    auth.session_cookie(request) is None:
+                abort(401, description="Unauthorized")
             if auth.current_user(request) is None:
                 abort(403, description="Forbidden")
 
