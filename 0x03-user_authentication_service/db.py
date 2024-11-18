@@ -2,6 +2,7 @@
 """
 DB class
 """
+import bcrypt
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -75,7 +76,7 @@ class DB:
             None
         Raises:
              ValueError: If an argument that does not correspond
-             to a user attribute is passed
+             to a user attribute is passed.
         """
         user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
