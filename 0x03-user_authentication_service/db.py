@@ -45,7 +45,7 @@ class DB:
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **kwargs: Any) -> User:
+    def find_user_by(self, **kwargs: Union[str, int, None]) -> User:
         """
         Find a user by arbitrary keyword arguments
         Args:
