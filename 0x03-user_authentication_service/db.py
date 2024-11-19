@@ -45,21 +45,22 @@ class DB:
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **kwargs: Union[str, int, None]) -> User:
+    def find_user_by(self, **kwargs: Any) -> User:
         """
         Find a user by arbitrary keyword arguments
         Args:
             kwargs: Arbitrary keyword arguments to filter the user table
         Returns:
-            User: The first user that matches the provided filters
+            user: The first user that matches the provided filters
         Raises:
             NoResultFound: If no user is found with the given attributes.
             InvalidRequestError: If an invalid query is attempted
         """
         try:
-            if kwargs:
-                user = self._session.query(User).filter_by(**kwargs).one()
-                return user
+            user = self._session.query(User).filter_by(**kwargs).first()
+            if user is None:
+                raise NoResultFound("NoResultFound")
+            return user
         except NoResultFound:
             raise NoResultFound("NoResultFound")
         except Exception as e:
