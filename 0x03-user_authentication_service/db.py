@@ -60,8 +60,7 @@ class DB:
         try:
             if kwargs:
                 user = self._session.query(User).filter_by(**kwargs).one()
-                if user is not None:
-                    return user
+                return user
         except MultipleResultsFound:
             return self._session.query(User).filter_by(**kwargs).first()
         except NoResultFound:
