@@ -2,7 +2,7 @@
 """
 Basic Flask app
 """
-from flask import Flask
+from flask import Flask, jsonify
 
 
 app = Flask(__name__)
@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.rout('/', methods=['GET'])
 def get():
-    flask.jsonify({"message": "Bienvenue"})
+    return jsonify({"message": "Bienvenue"})
 
 
 if __name__ == "__main__":
