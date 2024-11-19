@@ -57,16 +57,15 @@ class DB:
             InvalidRequestError: If an invalid query is attempted
         """
         if not kwargs:
-            raise InvalidRequestError("Invalid")
-        try:
-            user = self._session.query(User).filter_by(**kwargs).first()
-            if user is not None:
-                return user
-            user = self._session.query(User).filter_by(**kwargs).one()
-        except NoResultFound:
-            raise NoResultFound()
-        except InvalidRequestError:
-            raise InvalidRequestError()
+            raise InvalidRequestError
+        
+        for key in kwargs.keys():
+            if key not in User.__table__.columns.keys():
+                raise InvalidRequestError
+        user = self._session.query(User).filter_by(**kwargs).first()
+        if user is not None:
+            return user
+        raise NoResultFound()
 
     def update_user(self, user_id: int, **kwargs: Any) -> None:
         """
