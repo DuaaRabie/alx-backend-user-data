@@ -12,7 +12,7 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
 
-from typing import Any, Union
+from typing import Any
 
 
 class DB:
@@ -45,7 +45,7 @@ class DB:
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **kwargs: Union[str, int, None]) -> User:
+    def find_user_by(self, **kwargs: Any) -> User:
         """
         Find a user by arbitrary keyword arguments
         Args:
@@ -84,3 +84,4 @@ class DB:
                 raise ValueError("ValueError")
             setattr(user, key, value)
         self._session.commit()
+        return None
