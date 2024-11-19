@@ -9,6 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.exc import MultipleResultsFound
 
 from user import Base, User
 
@@ -58,12 +59,13 @@ class DB:
         """
         try:
             if kwargs:
-                user = self._session.query(User).filter_by(**kwargs).first()
+                user = self._session.query(User).filter_by(**kwargs).one()
                 if user is not None:
                     return user
-                raise NoResultFound("Not found")
+        except MultipleResultsFound:
+            return self._session.query(User).filter_by(**kwargs).first()
         except NoResultFound:
-            raise NoResultFound("Not found")
+                raise NoResultFound("Not found")
         except InvalidRequestError as e:
             raise InvalidRequestError("{e}")
 
