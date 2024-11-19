@@ -69,14 +69,6 @@ class DB:
     def update_user(self, user_id: int, **kwargs: Any) -> None:
         """
         To locate the user to update
-        Args:
-            user_id: The user's id for user needs update.
-            kwargs: Arbitrary keyword arguments to be updated.
-        Returns:
-            None
-        Raises:
-             ValueError: If an argument that does not correspond
-             to a user attribute is passed.
         """
         user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
