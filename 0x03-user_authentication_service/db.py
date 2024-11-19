@@ -57,16 +57,15 @@ class DB:
             NoResultFound: If no user is found with the given attributes.
             InvalidRequestError: If an invalid query is attempted
         """
+        if not kwargs:
+            raise InvalidRequestError("Invalid")
         try:
-            if kwargs:
-                user = self._session.query(User).filter_by(**kwargs).one()
-                return user
-        except MultipleResultsFound:
-            return self._session.query(User).filter_by(**kwargs).first()
+            user = self._session.query(User).filter_by(**kwargs).one()
+            return user
         except NoResultFound:
-            raise NoResultFound("Not found")
-        except InvalidRequestError as e:
-            raise InvalidRequestError("{e}")
+            raise NoResultFound()
+        except Exception:
+            raise InvalidRequestError()
 
     def update_user(self, user_id: int, **kwargs: Any) -> None:
         """
