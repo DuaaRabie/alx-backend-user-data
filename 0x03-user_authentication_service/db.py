@@ -65,7 +65,7 @@ class DB:
         except MultipleResultsFound:
             return self._session.query(User).filter_by(**kwargs).first()
         except NoResultFound:
-                raise NoResultFound("Not found")
+            raise NoResultFound("Not found")
         except InvalidRequestError as e:
             raise InvalidRequestError("{e}")
 
