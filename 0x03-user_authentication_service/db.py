@@ -57,8 +57,9 @@ class DB:
             InvalidRequestError: If an invalid query is attempted
         """
         try:
-            user = self._session.query(User).filter_by(**kwargs).one()
-            return user
+            if kwargs:
+                user = self._session.query(User).filter_by(**kwargs).one()
+                return user
         except NoResultFound:
             raise NoResultFound("NoResultFound")
         except Exception as e:
