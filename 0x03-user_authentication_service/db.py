@@ -12,7 +12,7 @@ from sqlalchemy.exc import InvalidRequestError
 
 from user import Base, User
 
-from typing import Any
+from typing import Any, Union
 
 
 class DB:
@@ -45,7 +45,7 @@ class DB:
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **kwargs: Any) -> User:
+    def find_user_by(self, **kwargs: Union[str, int, None]) -> User:
         """
         Find a user by arbitrary keyword arguments
         Args:
@@ -61,8 +61,8 @@ class DB:
             return user
         except NoResultFound:
             raise NoResultFound("NoResultFound")
-        except Exception:
-            raise InvalidRequestError("Invalid")
+        except Exception as e:
+            raise InvalidRequestError("{e}")
 
     def update_user(self, user_id: int, **kwargs: Any) -> None:
         """
