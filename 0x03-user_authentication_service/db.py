@@ -58,7 +58,6 @@ class DB:
         """
         if not kwargs:
             raise InvalidRequestError
-        
         for key in kwargs.keys():
             if key not in User.__table__.columns.keys():
                 raise InvalidRequestError
