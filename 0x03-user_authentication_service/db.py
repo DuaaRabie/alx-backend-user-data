@@ -66,7 +66,7 @@ class DB:
             return user
         raise NoResultFound
 
-    def update_user(self, user_id, **kwargs) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """
         To locate the user to update
         Args:
