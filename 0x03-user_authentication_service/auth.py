@@ -8,17 +8,17 @@ from db import User
 
 
 def _hash_password(password: str) -> bytes:
-        """
-        To salted hah the input password
-        Args:
-            password: Password to hash.
-        Returns:
-            bytes: the salted hash of the password.
-        """
-        password_bytes = password.encode('utf-8')
-        salt = bcrypt.gensalt()
-        hashed_password = bcrypt.hashpw(password_bytes, salt)
-        return hashed_password
+    """
+    To salted hah the input password
+    Args:
+        password: Password to hash.
+    Returns:
+        bytes: the salted hash of the password.
+    """
+    password_bytes = password.encode('utf-8')
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password_bytes, salt)
+    return hashed_password
 
 
 class Auth:
@@ -39,7 +39,6 @@ class Auth:
         Raises:
             ValueError: User <user's email> already exists
         """
-        
         try:
             self._db.find_user_by(email=email)
             raise ValueError(f'User {email} already exists')
