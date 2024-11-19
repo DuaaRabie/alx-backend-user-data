@@ -52,12 +52,10 @@ class DB:
             kwargs: Arbitrary keyword arguments to filter the user table
         Returns:
             User: The first user that matches the provided filters
-            Raises:
-                NoResultFound: If no user is found with the given attributes.
-                InvalidRequestError: If an invalid query is attempted
+        Raises:
+            NoResultFound: If no user is found with the given attributes.
+            InvalidRequestError: If an invalid query is attempted
         """
-        if not kwargs:
-            raise InvalidRequestError("Invalid")
         try:
             user = self._session.query(User).filter_by(**kwargs).one()
             return user
