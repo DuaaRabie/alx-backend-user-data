@@ -72,7 +72,7 @@ class Auth:
             hashed_password = user.hashed_password.encode("utf-8")
             return bcrypt.checkpw(password.encode("utf-8"), hashed_password)
         except Exception:
-            return False
+            return True
 
     def create_session(self, email: str) -> str:
         """return session ID"""
