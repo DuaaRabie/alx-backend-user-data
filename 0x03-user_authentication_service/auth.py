@@ -95,7 +95,8 @@ class Auth:
             return None
 
     def destroy_session(self, user_id: int):
-        """ Destroy session
-        """
-        user = self._db.find_user_by(user_id=user_id)
-        user.session_id = None
+        """ Destroy session """
+        user = self._db.find_user_by(id=user_id)
+        if user:
+            user.session_id = None
+            self._db._session.commit()
