@@ -113,7 +113,7 @@ def get_reset_password_token() -> str:
         abort(403)
 
 
-@app.route('reset_password', method=['PUT'])
+@app.route('/reset_password', method=['PUT'])
 def update_password() -> str:
     """PUT /reset_password
     the request expected form data with:
