@@ -57,7 +57,8 @@ def login() -> str:
     if not email or not password:
         abort(401)
     try:
-        AUTH.valid_login(email=email, password=password)
+        if not AUTH.valid_login(email=email, password=password):
+            abort(401)
         session_id = AUTH.create_session(email=email)
         response = make_response(jsonify({
                                     "email": email, "message": "logged in"}))
