@@ -109,7 +109,7 @@ def get_reset_password_token():
         reset_token = AUTH.get_reset_password_token('email')
         response = make_response(jsonify({
                 "email": email, "reset_token": reset_token}))
-        return reset_token
+        return response, 200
     except ValueError:
         abort(403)
 
