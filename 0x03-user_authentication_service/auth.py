@@ -54,7 +54,7 @@ class Auth:
         try:
             self._db.find_user_by(email=email)
             raise ValueError(f'User {email} already exists')
-        except NoResultFound:
+        except (NoResultFound, InvalidRequestError):
             hashed_password = _hash_password(password)
             hp_str = hashed_password.decode('utf-8')
             new_user = self._db.add_user(email, hp_str)
