@@ -119,7 +119,7 @@ class Auth:
             user = self._db.find_user_by(reset_token=reset_token)
         except NoResultFound:
             raise ValueError
-        hashed_password = _hash_password().encode("utf-8")
+        hashed_password = _hash_password().decode("utf-8")
         user.hashed_password = hashed_password
         user.reset_token = None
         self._db._session.commit()
