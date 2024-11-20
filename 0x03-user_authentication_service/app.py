@@ -68,7 +68,7 @@ def login() -> str:
         abort(401)
 
 
-@app.rout('/sessions', methods=['DELETE'])
+@app.route('/sessions', methods=['DELETE'])
 def logout():
     """ DELETE /sessions
     the request expected session ID Cookie
@@ -79,7 +79,7 @@ def logout():
     user = AUTH.get_user_from_session_id(session_id)
     if user:
         AUTH.destroy_session(user.id)
-        redirect('/')
+        return redirect('/')
     abort(403)
 
 
