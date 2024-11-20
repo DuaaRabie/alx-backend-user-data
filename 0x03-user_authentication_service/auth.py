@@ -6,6 +6,7 @@ import bcrypt
 import uuid
 from db import DB
 from db import User
+from sqlalchemy.orm.exc import NoResultFound
 
 
 def _hash_password(password: str) -> bytes:
@@ -47,18 +48,18 @@ class Auth:
         Raises:
             ValueError: User <user's email> already exists
         """
+        if not isinstance(email, str) or not isinstance(password, str):
+            raise ValueError("Email and Password must be strings")
         try:
-            if not isinstance(email, str) or not isinstance(password, str):
-                raise ValueError("Email and Password must be strings")
             self._db.find_user_by(email=email)
             raise ValueError(f'User {email} already exists')
-        except ValueError:
-            raise
-        except Exception:
-            hashed_password = _hash_password(password)
-            hp_str = hashed_password.decode('utf-8')
-            new_user = self._db.add_user(email, hp_str)
-            return new_user
+        except NoResultFound:
+            pass
+
+        hashed_password = _hash_password(password)
+        hp_str = hashed_password.decode('utf-8')
+        new_user = self._db.add_user(email, hp_str)
+        return new_user
 
     def valid_login(self, email: str, password: str) -> bool:
         """
