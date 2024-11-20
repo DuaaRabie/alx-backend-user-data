@@ -69,7 +69,7 @@ def login() -> str:
 
 
 @app.route('/sessions', methods=['DELETE'])
-def logout():
+def logout() -> str:
     """ DELETE /sessions
     the request expected session ID Cookie
     """
@@ -84,7 +84,7 @@ def logout():
 
 
 @app.route('/profile', methods=['GET'])
-def profile():
+def profile() -> str:
     """GET /profile
     the request expected session ID Cookie
     """
@@ -98,7 +98,7 @@ def profile():
 
 
 @app.route('/reset_password', methods=['POST'])
-def get_reset_password_token():
+def get_reset_password_token() -> str:
     """ POST /reset_password
     the request expected form data with email
     """
@@ -109,6 +109,27 @@ def get_reset_password_token():
         reset_token = AUTH.get_reset_password_token(email)
         return jsonify({
             "email": email, "reset_token": reset_token}), 200
+    except ValueError:
+        abort(403)
+
+
+@app.route('reset_password', method=['PUT'])
+def update_password() -> str:
+    """PUT /reset_password
+    the request expected form data with:
+        - email
+        - reset_token
+        - new_password
+    """
+    email = request.form.get('email')
+    reset_token = request.form.get('reset_token')
+    new_password = request.form.get('new_password')
+
+    if not email or not reset_token or not new_password:
+        abort(403)
+    try:
+        AUTH.update_password(reset_token, new_password)
+        return jsonify({"email": email, "message": "Password updated"}), 200
     except ValueError:
         abort(403)
 
