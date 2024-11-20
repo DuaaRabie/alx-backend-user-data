@@ -48,7 +48,7 @@ class Auth:
             ValueError: User <user's email> already exists
         """
         try:
-            if isinstance(email, str) or isinstance(password, str)
+            if not isinstance(email, str) or not isinstance(password, str):
                 raise ValueError("Email and Password must be strings")
             self._db.find_user_by(email=email)
             raise ValueError(f'User {email} already exists')
