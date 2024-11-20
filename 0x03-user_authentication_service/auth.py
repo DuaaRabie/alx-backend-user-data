@@ -49,8 +49,6 @@ class Auth:
         """
         try:
             self._db.find_user_by(email=email)
-            raise ValueError
-        except ValueError:
             raise ValueError(f'User {email} already exists')
         except Exception:
             hashed_password = _hash_password(password)
