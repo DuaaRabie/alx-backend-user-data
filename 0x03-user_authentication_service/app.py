@@ -106,9 +106,8 @@ def get_reset_password_token():
     if not email:
         abort(403)
     try:
-        if AUTH.valid_login('email'):
-            reset_token = AUTH.get_reset_password_token('email')
-            response = make_response(jsonify({
+        reset_token = AUTH.get_reset_password_token('email')
+        response = make_response(jsonify({
                 "email": email, "reset_token": reset_token}))
         return reset_token
     except ValueError:
