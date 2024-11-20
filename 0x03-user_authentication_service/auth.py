@@ -49,3 +49,19 @@ class Auth:
             hp_str = hashed_password.decode('utf-8')
             new_user = self._db.add_user(email, hp_str)
             return new_user
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """
+        Determine the valid login
+        Args:
+            email: user's email want to login
+            password: user's password
+        Returns:
+            Boolean
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            hashed_password = user.hashed_password.encode("utf-8")
+            return bcrypt.checkpw(password.encode("utf-8"), hashed_password)
+        except Exception:
+            return False
