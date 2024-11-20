@@ -4,7 +4,6 @@ hashing passwords
 """
 import bcrypt
 import uuid
-from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from db import User
 
@@ -72,7 +71,7 @@ class Auth:
             user = self._db.find_user_by(email=email)
             hashed_password = user.hashed_password.encode("utf-8")
             return bcrypt.checkpw(password.encode("utf-8"), hashed_password)
-        except NoResultFound:
+        except Exception:
             return False
 
     def create_session(self, email: str) -> str:
