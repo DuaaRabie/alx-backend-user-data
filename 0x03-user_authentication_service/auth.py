@@ -7,6 +7,7 @@ import uuid
 from db import DB
 from db import User
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 
 
 def _hash_password(password: str) -> bytes:
@@ -53,11 +54,9 @@ class Auth:
         try:
             self._db.find_user_by(email=email)
             raise ValueError(f'User {email} already exists')
-        except NoResultFound:
+        except InvalidRequestError:
             pass
-        except ValueError:
-            raise
-        except Exception:
+        except NoResultFound:
             pass
 
         hashed_password = _hash_password(password)
