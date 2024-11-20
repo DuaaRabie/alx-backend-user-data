@@ -52,6 +52,8 @@ class Auth:
                 raise ValueError("Email and Password must be strings")
             self._db.find_user_by(email=email)
             raise ValueError(f'User {email} already exists')
+        except ValueError:
+            raise
         except Exception:
             hashed_password = _hash_password(password)
             hp_str = hashed_password.decode('utf-8')
