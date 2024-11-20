@@ -71,10 +71,10 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(email=email)
-            hashed_password = user.hashed_password.encode("utf-8")
-            return bcrypt.checkpw(password.encode("utf-8"), hashed_password)
-        except Exception:
+        except NoResultFound:
             return False
+        hashed_password = user.hashed_password.encode("utf-8")
+        return bcrypt.checkpw(password.encode("utf-8"), hashed_password)
 
     def create_session(self, email: str) -> str:
         """return session ID"""
@@ -112,3 +112,14 @@ class Auth:
         reset_token = _generate_uuid()
         self._db.update_user(user.id, reset_token=reset_token)
         return reset_token
+
+    def update_password(self, reset_token: str, password: str) -> None:
+        """ update password """
+        try:
+            user = self._db.find_user_by(reset_token=reset_token)
+        except NoResultFound:
+            raise ValueError
+        hashed_password = _hash_password().encode("utf-8")
+        user.hashed_password = hashed_password
+        user.reset_token = None
+        self._db._session.commit()
