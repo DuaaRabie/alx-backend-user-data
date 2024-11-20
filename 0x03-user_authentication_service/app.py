@@ -54,13 +54,15 @@ def login() -> str:
     """
     email = request.form.get("email")
     password = request.form.get("password")
+    if not email or not password:
+        abort(401)
     try:
         AUTH.valid_login(email=email, password=password)
         session_id = AUTH.create_session(email=email)
-        resp = make_response("new_session")
-        resp.set_cookie('session_id', session_id)
-        return jsonify({
-                        "email": email, "message": "logged in"})
+        response = make_response(jsonify({
+                                    "email": email, "message": "logged in"}))
+        response.set_cookie('session_id', session_id)
+        return response
     except Exception:
         abort(401)
 
