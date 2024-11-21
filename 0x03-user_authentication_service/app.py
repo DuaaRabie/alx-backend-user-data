@@ -42,28 +42,28 @@ def users() -> str:
         return jsonify({"message": "email already registered"}), 400
 
 
-#@app.route('/sessions', methods=['POST'])
-#def login() -> str:
-#    """ POST /sessions
-#    the request expected form data contain:
-#        - email
-#        - password
-#    Returns:
-#        - {"email": "<user email>", "message": "logged in"}
-#        - abort 401
-#    """
-#    email = request.form.get("email")
-#    password = request.form.get("password")
-#    try:
-#        if not AUTH.valid_login(email=email, password=password):
-#            abort(401)
-#        session_id = AUTH.create_session(email=email)
-#        response = make_response(jsonify({
-#                                   "email": email, "message": "logged in"}))
-#        response.set_cookie('session_id', session_id)
-#        return response
-#    except Exception:
-#        abort(401)
+@app.route('/sessions', methods=['POST'])
+def login() -> str:
+    """ POST /sessions
+    the request expected form data contain:
+        - email
+        - password
+    Returns:
+        - {"email": "<user email>", "message": "logged in"}
+        - abort 401
+    """
+    email = request.form.get("email")
+    password = request.form.get("password")
+    try:
+        if not AUTH.valid_login(email=email, password=password):
+            abort(401)
+        session_id = AUTH.create_session(email=email)
+        response = make_response(jsonify({
+                                   "email": email, "message": "logged in"}))
+        response.set_cookie('session_id', session_id)
+        return response
+    except Exception:
+        abort(401)
 
 
 @app.route('/sessions', methods=['DELETE'])
