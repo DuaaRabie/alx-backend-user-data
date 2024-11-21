@@ -52,12 +52,11 @@ class Auth:
         try:
             user = self._db.find_user_by(email=email)
             raise ValueError(f'User {email} already exists')
-        except ValueError:
-            raise ValueError(f'User {email} already exists')
-        except InvalidRequestError:
+        except NoResultFound:
             pass
         except Exception:
-            pass
+            raise ValueError
+
         hashed_password = _hash_password(password)
         hp_str = hashed_password.decode('utf-8')
         new_user = self._db.add_user(email, hp_str)
