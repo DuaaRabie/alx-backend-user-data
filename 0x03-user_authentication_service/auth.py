@@ -69,6 +69,8 @@ class Auth:
         Returns:
             Boolean
         """
+        if not email or not password:
+            raise ValueError
         try:
             user = self._db.find_user_by(email=email)
             hashed_password = user.hashed_password.encode("utf-8")
