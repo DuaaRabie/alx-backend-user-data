@@ -53,8 +53,6 @@ class Auth:
             raise ValueError(f'User {email} already exists')
         except ValueError:
             raise ValueError(f'User {email} already exists')
-        except NoResultFound:
-            pass
         except Exception:
             hashed_password = _hash_password(password)
             hp_str = hashed_password.decode('utf-8')
