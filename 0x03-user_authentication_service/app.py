@@ -54,8 +54,6 @@ def login() -> str:
     """
     email = request.form.get("email")
     password = request.form.get("password")
-    if not email or not password:
-        abort(401)
     try:
         if not AUTH.valid_login(email=email, password=password):
             abort(401)
