@@ -53,7 +53,7 @@ class Auth:
             raise ValueError(f'User {email} already exists')
         except ValueError:
             raise ValueError(f'User {email} already exists')
-        except ( NoResultFound, Exception):
+        except NoResultFound:
             hashed_password = _hash_password(password)
             hp_str = hashed_password.decode('utf-8')
             new_user = self._db.add_user(email, hp_str)
