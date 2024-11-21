@@ -51,9 +51,10 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(email=email)
-            if user:
                 raise ValueError(f'User {email} already exists')
         except NoResultFound:
+            pass
+        except InvalidRequestError:
             pass
         hashed_password = _hash_password(password)
         hp_str = hashed_password.decode('utf-8')
