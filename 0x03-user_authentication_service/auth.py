@@ -54,10 +54,11 @@ class Auth:
         except ValueError:
             raise
         except NoResultFound:
-            hashed_password = _hash_password(password)
+            pass
+            """hashed_password = _hash_password(password)
             hp_str = hashed_password.decode('utf-8')
             new_user = self._db.add_user(email, hp_str)
-            return new_user
+            return new_user"""
 
     def valid_login(self, email: str, password: str) -> bool:
         """
