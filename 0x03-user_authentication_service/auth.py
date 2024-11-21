@@ -56,11 +56,15 @@ class Auth:
             raise
         except InvalidRequestError:
             raise
-        except (NoResultFound, Exception):
-            hashed_password = _hash_password(password)
-            hp_str = hashed_password.decode('utf-8')
-            new_user = self._db.add_user(email, hp_str)
-            return new_user
+        except NoResultFound:
+            pass
+        except Exception:
+            pass
+
+        hashed_password = _hash_password(password)
+        hp_str = hashed_password.decode('utf-8')
+        new_user = self._db.add_user(email, hp_str)
+        return new_user
 
     def valid_login(self, email: str, password: str) -> bool:
         """
