@@ -55,7 +55,6 @@ class Auth:
             raise
         except NoResultFound:
             pass
-        
         hashed_password = _hash_password(password)
         hp_str = hashed_password.decode('utf-8')
         new_user = self._db.add_user(email, hp_str)
